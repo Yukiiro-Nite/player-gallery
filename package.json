@@ -9,6 +9,10 @@
   },
   "author": "Michael Bryant",
   "license": "ISC",
+  "repository" : {
+    "type" : "git",
+    "url" : " https://github.com/Yukiiro-Nite/player-gallery.git"
+  },
   "dependencies": {
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
