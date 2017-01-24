@@ -2,7 +2,8 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser')();
-const expressSession = require('express-session')({ secret: 'player-gallery', resave: true, saveUninitialized: true });
+const getSecret = require('./utils/getSecret');
+const expressSession = require('express-session')({ secret: getSecret.secret, resave: true, saveUninitialized: true });
 const port = 3008;
 
 const log = require('./utils/logger.js').logUtil('Server');
