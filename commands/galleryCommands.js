@@ -1,51 +1,54 @@
 const cwd = process.cwd();
 const con = require(`${cwd}/utils/mongoConnection.js`).con;
 const log = require(`${cwd}/utils/logger.js`).logUtil('galleryCommands');
+const passport = require('passport');
 
 module.exports = ( app ) => {
-  app.get('/galleries', (req, res) => {
+  app.get('/galleries',
+    (req, res) => {
     readGalleries().then(
-      res.send,
-      res.status(500).send
+      galleries => res.send(galleries),
+      err => res.status(500).send(err)
     );
   });
 
   app.get('/gallery/:id', (req, res) => {
     readGallery(req.params.id).then(
-      res.send,
-      res.status(500).send
+      gallery => res.send(gallery),
+      err => res.status(500).send(err)
     );
   });
 
   app.post('/gallery', (req, res) => {
     createGallery(req.body).then(
-      res.send,
-      res.status(500).send
+      status => res.send(status),
+      err => res.status(500).send(err)
     );
   });
 
   app.put('/gallery/:id', (req, res) => {
     updateGallery(req.params.id, req.body).then(
-      res.send,
-      res.status(500).send
+      status => res.send(status),
+      err => res.status(500).send(err)
     );
   });
 
   app.delete('/gallery/:id', (req, res) => {
     deleteGallery(req.params.id).then(
-      res.send,
-      res.status(500).send
+      status => res.send(status),
+      err => res.status(500).send(err)
     );
   });
 };
 
 function readGalleries() {
   return con((galleries, resolve, reject) => {
-    galleries.find({}).toArray((err, galleries) => {
+    galleries.find({}).toArray((err, foundGalleries) => {
       if(err) {
+        log(`Error reading galleries: ${JSON.stringify(err)}`);
         reject(err);
       } else {
-        resolve(galleries);
+        resolve(foundGalleries);
       }
     });
   }, 'galleries');
@@ -53,11 +56,11 @@ function readGalleries() {
 
 function readGallery(id) {
   return con((galleries, resolve, reject) => {
-    galleries.find({id}).toArray((err, galleries) => {
+    galleries.findOne({id}, (err, foundGallery) => {
       if(err) {
         reject(err);
       } else {
-        resolve(galleries);
+        resolve(foundGallery);
       }
     });
   }, 'galleries');
@@ -65,18 +68,18 @@ function readGallery(id) {
 
 function createGallery(gallery) {
   return con((galleries, resolve, reject) => {
-
+    resolve('Implement insert gallery');
   }, 'galleries');
 }
 
 function updateGallery(id, gallery) {
   return con((galleries, resolve, reject) => {
-
+    resolve('Implement update gallery');
   }, 'galleries');
 }
 
 function deleteGallery(id) {
   return con((galleries, resolve, reject) => {
-
+    resolve('Implement delete gallery');
   }, 'galleries');
 }

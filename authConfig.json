@@ -1,0 +1,10 @@
+{
+  "/login/": {
+    "GET": false,
+    "POST": false
+  },
+  "/register/": {
+    "GET": false,
+    "POST": false
+  }
+}
