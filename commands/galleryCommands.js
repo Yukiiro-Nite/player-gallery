@@ -1,7 +1,8 @@
+const ObjectId = require('mongodb').ObjectId;
+
 const cwd = process.cwd();
 const con = require(`${cwd}/utils/mongoConnection.js`).con;
 const log = require(`${cwd}/utils/logger.js`).logUtil('galleryCommands');
-const passport = require('passport');
 
 module.exports = ( app ) => {
   app.get('/galleries',
@@ -56,7 +57,7 @@ function readGalleries() {
 
 function readGallery(id) {
   return con((galleries, resolve, reject) => {
-    galleries.findOne({id}, (err, foundGallery) => {
+    galleries.findOne({_id: new ObjectId(id)}, (err, foundGallery) => {
       if(err) {
         reject(err);
       } else {
@@ -68,18 +69,31 @@ function readGallery(id) {
 
 function createGallery(gallery) {
   return con((galleries, resolve, reject) => {
-    resolve('Implement insert gallery');
+    galleries.insertOne(gallery, (err, r) => {
+      if(err) {
+        reject(err);
+      } else {
+        resolve({success:true});
+      }
+    });
   }, 'galleries');
 }
 
 function updateGallery(id, gallery) {
   return con((galleries, resolve, reject) => {
-    resolve('Implement update gallery');
+    galleries.update({_id: new ObjectId(id)}, gallery, (err, r) => {
+      if(err) {
+        reject(err);
+      } else {
+        resolve({success:true});
+      }
+    });
   }, 'galleries');
 }
 
 function deleteGallery(id) {
   return con((galleries, resolve, reject) => {
-    resolve('Implement delete gallery');
+    galleries.remove({_id: new ObjectId(id)});
+    resolve({success:true});
   }, 'galleries');
 }
