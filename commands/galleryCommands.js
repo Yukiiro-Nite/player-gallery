@@ -5,7 +5,7 @@ const con = require(`${cwd}/utils/mongoConnection.js`).con;
 const log = require(`${cwd}/utils/logger.js`).logUtil('galleryCommands');
 
 module.exports = ( app ) => {
-  app.get('/galleries',
+  app.get('/api/galleries',
     (req, res) => {
     readGalleries().then(
       galleries => res.send(galleries),
@@ -13,28 +13,28 @@ module.exports = ( app ) => {
     );
   });
 
-  app.get('/gallery/:id', (req, res) => {
+  app.get('/api/gallery/:id', (req, res) => {
     readGallery(req.params.id).then(
       gallery => res.send(gallery),
       err => res.status(500).send(err)
     );
   });
 
-  app.post('/gallery', (req, res) => {
+  app.post('/api/gallery', (req, res) => {
     createGallery(req.body).then(
       status => res.send(status),
       err => res.status(500).send(err)
     );
   });
 
-  app.put('/gallery/:id', (req, res) => {
+  app.put('/api/gallery/:id', (req, res) => {
     updateGallery(req.params.id, req.body).then(
       status => res.send(status),
       err => res.status(500).send(err)
     );
   });
 
-  app.delete('/gallery/:id', (req, res) => {
+  app.delete('/api/gallery/:id', (req, res) => {
     deleteGallery(req.params.id).then(
       status => res.send(status),
       err => res.status(500).send(err)

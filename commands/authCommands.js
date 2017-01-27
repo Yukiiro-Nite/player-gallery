@@ -87,7 +87,6 @@ function getUserById(_id) {
 }
 
 function requiresAuth(request) {
-  log(`Require auth check for ${request.method} ${request.path}`);
   if(authConfig[request.path] == undefined){
     return true;
   } else {
